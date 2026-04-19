@@ -1,0 +1,129 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --gradient-primary: linear-gradient(135deg, #002B7F 0%, #007BFF 45%, #00CFFF 100%);
+  --gradient-accent: linear-gradient(90deg, #00C6FF 0%, #0072FF 100%);
+  --gradient-dark: radial-gradient(ellipse at 30% 30%, #0033A0 0%, #001A50 50%, #000C28 100%);
+  --text-primary: #0F172A;
+  --text-secondary: #334155;
+  --bg-surface: #FFFFFF;
+  --bg-offwhite: #F8FAFF;
+}
+
+.bg-gradient-primary { background-image: var(--gradient-primary); }
+.bg-gradient-accent { background-image: var(--gradient-accent); }
+.bg-gradient-dark { background-image: var(--gradient-dark); }
+
+.glass-surface {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+}
+
+.section { padding: 5rem 1.5rem; }
+.section-alt { padding: 6rem 1.5rem; background: #F8FAFF; }
+
+/* Full-bleed utility for edge-to-edge sections inside centered containers */
+.full-bleed {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+
+.shadow-blue { box-shadow: 0 8px 25px rgba(0, 140, 255, 0.15); }
+.shadow-deep { box-shadow: 0 20px 60px rgba(0, 128, 255, 0.25); }
+
+/* Stronger blue shadow for emphasis */
+.shadow-blue-strong { box-shadow: 0 12px 35px rgba(0, 140, 255, 0.25); }
+
+/* Hover bloom utility for CTA buttons */
+.hover-bloom { transition: all 200ms ease; }
+.hover-bloom:hover { filter: brightness(1.05); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0, 150, 255, 0.25); }
+
+.text-gradient {
+  background: var(--gradient-accent);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.shimmer-bg {
+  background: linear-gradient(120deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 4s linear infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Gradient-X animation (for hero background sweep) */
+.animate-gradient-x { background-size: 200% 200%; animation: gradient-x 10s ease infinite; }
+@keyframes gradient-x {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Hero gradient utility (does not rely on Tailwind) */
+.hero-gradient { background-image: var(--gradient-primary); }
+
+/* Max width wrapper for hero inner content */
+.maxw-hero { max-width: 1120px; margin: 0 auto; padding-left: 1.5rem; padding-right: 1.5rem; }
+
+/* Floating pattern animation for SVG overlay */
+.animate-float-pattern { animation: float-pattern 12s ease-in-out infinite; }
+@keyframes float-pattern {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+/* Blue title bar utility for Reports page */
+.titlebar-blue {
+  background-image: var(--gradient-primary);
+  color: #fff;
+  padding: 1rem 1.25rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 128, 255, 0.25);
+}
+
+/* Navbar link underline animation */
+.nav-link {
+  position: relative;
+  color: #0f172a;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 4px;
+  height: 2px;
+  background-image: var(--gradient-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 200ms ease;
+}
+.nav-link:hover::after { transform: scaleX(1); }
+
+/* Hero tiny particle dots */
+.particle {
+  position: absolute;
+  width: 8px; height: 8px;
+  border-radius: 9999px;
+  background: rgba(173, 216, 230, 0.8);
+  box-shadow: 0 0 14px rgba(125, 211, 252, 0.6);
+  animation: particle-float 10s ease-in-out infinite;
+}
+@keyframes particle-float {
+  0% { transform: translateY(0) translateX(0); opacity: 0.6; }
+  50% { transform: translateY(-20px) translateX(10px); opacity: 1; }
+  100% { transform: translateY(0) translateX(0); opacity: 0.6; }
+}

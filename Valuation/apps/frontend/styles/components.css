@@ -1,0 +1,828 @@
+/* ========================================================================
+   EPIIDOSIS VALUATION PORTAL — COMPONENTS LIBRARY
+   Depends on: theme.css (tokens, gradients, shadows)
+   Author: Epiidosis Design System
+   ======================================================================== */
+
+/* =========================================================================
+   0) GLOBAL RESETS & HELPERS
+   ========================================================================= */
+:root {
+  --ring: 2px;
+  --ring-color: rgba(0, 140, 255, 0.25);
+  --focus-color: #00CFFF;
+  --border: #E2E8F0;           /* gray-200 */
+  --muted: #64748B;            /* slate-500 */
+  --panel: #FFFFFF;
+  --panel-alt: #F8FAFF;
+  --danger: #DC2626;
+  --warn: #F59E0B;
+  --success: #16A34A;
+  --info: #0EA5E9;
+  --overlay: rgba(2, 6, 23, 0.6); /* slate-950/60 */
+}
+
+/* Fluid container presets */
+.container-xs { max-width: 640px; margin-inline: auto; padding-inline: 1rem; }
+.container-sm { max-width: 768px; margin-inline: auto; padding-inline: 1.25rem; }
+.container-md { max-width: 1024px; margin-inline: auto; padding-inline: 1.5rem; }
+.container-lg { max-width: 1280px; margin-inline: auto; padding-inline: 1.75rem; }
+.container-xl { max-width: 1440px; margin-inline: auto; padding-inline: 2rem; }
+
+/* Focus ring */
+.focus-ring:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 var(--ring) var(--ring-color);
+  border-color: var(--focus-color);
+}
+
+/* Disabled */
+.is-disabled,
+[disabled] {
+  opacity: .6;
+  cursor: not-allowed !important;
+  pointer-events: none;
+}
+
+/* Divider */
+.hr {
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+}
+
+/* Pill */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: .25rem .625rem;
+  border-radius: 999px;
+  font-size: .75rem;
+  line-height: 1rem;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--epi-text-secondary);
+}
+
+/* =========================================================================
+   1) GLOBAL LAYOUT & NAVIGATION
+   ========================================================================= */
+
+/* AppShell */
+.app-shell {
+  min-height: 100dvh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  background: linear-gradient(to bottom, #fff, #F8FAFF 60%, #E6F2FF);
+  color: var(--epi-text-primary);
+}
+
+/* Header / Navbar */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--gradient-secondary);
+  color: #fff;
+  box-shadow: var(--shadow-strong);
+}
+.navbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: .875rem 1.25rem;
+}
+.navbar .brand {
+  display: inline-flex; align-items: center; gap: .625rem;
+  font-weight: 700; letter-spacing: .2px;
+}
+.navbar .brand img { height: 28px; width: auto; }
+.navbar .links {
+  display: flex; align-items: center; gap: 1rem;
+}
+.navbar .cta {
+  display: inline-flex; gap: .5rem; align-items: center;
+}
+
+/* Mobile Drawer */
+.drawer {
+  position: fixed; inset: 0;
+  display: none;
+}
+.drawer.open { display: block; }
+.drawer .backdrop {
+  position: absolute; inset: 0; background: var(--overlay);
+}
+.drawer .panel {
+  position: absolute; top: 0; right: 0; height: 100%; width: 320px;
+  background: var(--panel); box-shadow: var(--shadow-strong);
+  padding: 1rem; overflow-y: auto;
+}
+
+/* Footer */
+.footer {
+  background: rgba(255,255,255, .9);
+  border-top: 1px solid var(--border);
+  backdrop-filter: blur(8px);
+  color: #64748B;
+  font-size: .9rem;
+  text-align: center;
+  padding: 1.25rem;
+}
+
+/* Page Container / Section */
+.page {
+  padding-block: 2rem;
+}
+.section {
+  padding: 5rem 1.5rem;
+}
+.section--alt {
+  padding: 6rem 1.5rem;
+  background: var(--panel-alt);
+}
+.section__title {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 700; font-size: 2rem;
+  color: var(--epi-blue-dark);
+  text-align: center; margin-bottom: .75rem;
+}
+.section__subtitle {
+  color: var(--muted); text-align: center; max-width: 56ch;
+  margin: 0 auto 2rem;
+}
+
+/* Breadcrumbs */
+.breadcrumbs {
+  display: flex; gap: .5rem; align-items: center; flex-wrap: wrap;
+  font-size: .875rem; color: #334155;
+}
+.breadcrumbs a { color: #0F172A; text-decoration: none; }
+.breadcrumbs .sep { opacity: .5; }
+
+/* Skip link */
+.skip-link {
+  position: absolute; left: -9999px; top: auto;
+}
+.skip-link:focus {
+  left: 1rem; top: 1rem; z-index: 100;
+  background: #fff; padding: .5rem .75rem; border-radius: .5rem;
+  box-shadow: var(--shadow-blue);
+}
+
+/* =========================================================================
+   2) GLOBAL FOUNDATIONS (PRIMITIVES)
+   ========================================================================= */
+
+/* Buttons */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+  padding: .75rem 1.5rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  font-weight: 600; cursor: pointer; user-select: none;
+  transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease, color .2s ease;
+}
+.btn:focus-visible { box-shadow: 0 0 0 2px rgba(0, 191, 255, .35); }
+.btn:active { transform: translateY(1px); }
+
+.btn-primary {
+  background: var(--panel);
+  color: var(--epi-blue-dark);
+  box-shadow: 0 4px 12px rgba(147, 197, 253, .4);
+}
+.btn-primary:hover { background: #E0F2FE; transform: translateY(-1px); }
+
+.btn-secondary {
+  background: var(--gradient-secondary);
+  color: #fff; box-shadow: var(--shadow-blue);
+}
+.btn-secondary:hover { filter: brightness(1.05); transform: translateY(-1px); }
+
+.btn-ghost {
+  background: transparent; color: var(--epi-text-primary);
+  border-color: var(--border);
+}
+.btn-ghost:hover { background: #F1F5F9; }
+
+.btn-destructive {
+  background: #DC2626; color: #fff;
+}
+.btn-destructive:hover { filter: brightness(1.05); }
+
+.btn-link {
+  background: transparent; color: #0369A1;
+  padding: 0; border: none;
+}
+.btn-link:hover { text-decoration: underline; }
+
+/* Icon button */
+.icon-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px; border-radius: .75rem;
+  border: 1px solid var(--border); background: #fff; color: #0F172A;
+  transition: background .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+.icon-btn:hover { background: #F8FAFF; box-shadow: var(--shadow-soft); transform: translateY(-1px); }
+
+/* Badge / Chip */
+.badge {
+  display: inline-flex; align-items: center; gap: .5rem;
+  padding: .25rem .6rem; border-radius: 999px; font-size: .75rem;
+  border: 1px solid var(--border); background: #fff; color: #475569;
+}
+.badge.success { border-color: #86EFAC; color: #166534; background: #ECFDF5; }
+.badge.warn    { border-color: #FDE68A; color: #92400E; background: #FFFBEB; }
+.badge.error   { border-color: #FCA5A5; color: #7F1D1D; background: #FEF2F2; }
+.badge.info    { border-color: #BAE6FD; color: #075985; background: #EFF6FF; }
+
+/* Card */
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.card:hover { transform: translateY(-3px); box-shadow: var(--shadow-blue); }
+.card--glass {
+  background: rgba(255,255,255, .85);
+  backdrop-filter: blur(12px);
+}
+.card--outline {
+  border: 1px solid rgba(0, 191, 255, .3);
+}
+.card__body { padding: 1.25rem; }
+.card__title { font-weight: 700; color: var(--epi-blue-dark); margin-bottom: .25rem; }
+.card__subtitle { color: var(--muted); margin-bottom: .75rem; }
+
+/* Tooltip (pure CSS hook; show on parent:hover) */
+.tooltip {
+  position: relative; display: inline-block;
+}
+.tooltip .tooltip__pop {
+  pointer-events: none;
+  position: absolute; bottom: calc(100% + .5rem); left: 50%; transform: translateX(-50%);
+  background: #0F172A; color: #fff;
+  padding: .4rem .6rem; border-radius: .5rem; font-size: .75rem;
+  opacity: 0; translate: 0 4px; transition: all .15s ease;
+  white-space: nowrap; z-index: 20;
+}
+.tooltip:hover .tooltip__pop { opacity: 1; translate: 0 0; }
+
+/* Popover */
+.popover {
+  position: relative; display: inline-block;
+}
+.popover__panel {
+  position: absolute; top: calc(100% + .5rem); right: 0; min-width: 220px;
+  background: #fff; border: 1px solid var(--border); border-radius: .75rem;
+  box-shadow: var(--shadow-strong); padding: .75rem; z-index: 30;
+}
+
+/* Modal / Dialog */
+.modal {
+  position: fixed; inset: 0; z-index: 60; display: none;
+}
+.modal.open { display: block; }
+.modal__backdrop { position: absolute; inset: 0; background: var(--overlay); }
+.modal__dialog {
+  position: relative; margin: 6vh auto; width: min(90vw, 720px);
+  background: #fff; border: 1px solid var(--border); border-radius: 1rem; box-shadow: var(--shadow-strong);
+  padding: 1rem;
+}
+.modal--sm .modal__dialog { width: min(90vw, 480px); }
+.modal--lg .modal__dialog { width: min(90vw, 960px); }
+
+/* Drawer / Sheet */
+.sheet {
+  position: fixed; inset: 0; display: none; z-index: 60;
+}
+.sheet.open { display: block; }
+.sheet__backdrop { position: absolute; inset: 0; background: var(--overlay); }
+.sheet__panel {
+  position: absolute; top: 0; right: 0; height: 100%; width: min(92vw, 420px);
+  background: #fff; border-left: 1px solid var(--border);
+  padding: 1rem; overflow-y: auto; box-shadow: var(--shadow-strong);
+}
+
+/* Tabs */
+.tabs {
+  display: flex; gap: .5rem; border-bottom: 1px solid var(--border);
+}
+.tab {
+  padding: .6rem .9rem; border-radius: .5rem .5rem 0 0;
+  color: #334155; cursor: pointer;
+}
+.tab[aria-selected="true"] {
+  background: #fff; color: #0F172A; border: 1px solid var(--border); border-bottom-color: transparent;
+}
+
+/* Accordion */
+.accordion { display: grid; gap: .5rem; }
+.accordion__item { border: 1px solid var(--border); border-radius: .75rem; background: #fff; overflow: hidden; }
+.accordion__button {
+  width: 100%; text-align: left; padding: .9rem 1rem; font-weight: 600;
+  display: flex; align-items: center; justify-content: space-between; gap: .75rem;
+}
+.accordion__panel { padding: .9rem 1rem; color: #475569; }
+
+/* Alerts */
+.alert {
+  display: flex; gap: .75rem; align-items: flex-start;
+  padding: .875rem 1rem; border-radius: .75rem; border: 1px solid var(--border);
+}
+.alert.info    { background: #EFF6FF; border-color: #BFDBFE; color: #075985; }
+.alert.warn    { background: #FFFBEB; border-color: #FDE68A; color: #92400E; }
+.alert.success { background: #ECFDF5; border-color: #86EFAC; color: #166534; }
+.alert.error   { background: #FEF2F2; border-color: #FCA5A5; color: #7F1D1D; }
+
+/* Toast stack */
+.toast-stack {
+  position: fixed; right: 1rem; bottom: 1rem; z-index: 70;
+  display: grid; gap: .5rem;
+}
+.toast {
+  background: #0F172A; color: #fff; border-radius: .75rem; padding: .75rem 1rem;
+  box-shadow: var(--shadow-strong);
+}
+
+/* Progress / Spinner / Skeleton */
+.progress {
+  height: .5rem; width: 100%; border-radius: 999px; background: #E2E8F0; overflow: hidden;
+}
+.progress__bar { height: 100%; width: 0; background: var(--gradient-accent); transition: width .2s ease; }
+
+.spinner {
+  width: 24px; height: 24px; border-radius: 50%;
+  border: 3px solid #E2E8F0; border-top-color: #0EA5E9; animation: spin .8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.skeleton {
+  background: linear-gradient(90deg, #EEF2F7 25%, #F7F9FC 40%, #EEF2F7 65%);
+  background-size: 400% 100%;
+  animation: shimmer 1.2s ease-in-out infinite;
+  border-radius: .5rem;
+}
+
+/* =========================================================================
+   3) FORMS & INPUTS
+   ========================================================================= */
+.field { display: grid; gap: .375rem; }
+.label { font-weight: 600; color: #0F172A; }
+.help  { font-size: .8125rem; color: #64748B; }
+.error { font-size: .8125rem; color: #DC2626; }
+
+.input, .textarea, .select {
+  width: 100%;
+  border: 1px solid var(--border); border-radius: .625rem;
+  padding: .6rem .75rem; background: #fff; color: #0F172A;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+.input:focus, .textarea:focus, .select:focus {
+  border-color: #00BFFF; box-shadow: 0 0 0 2px rgba(0,191,255,.2);
+}
+.textarea { min-height: 120px; resize: vertical; }
+
+.input--error, .select--error, .textarea--error {
+  border-color: #FCA5A5; box-shadow: 0 0 0 2px rgba(252,165,165,.2);
+}
+
+/* NumberField */
+.input-number { text-align: right; font-variant-numeric: tabular-nums; }
+
+/* Checkbox / Radio / Switch */
+.check { display: inline-flex; align-items: center; gap: .5rem; }
+.switch {
+  --h: 24px; --w: 42px;
+  width: var(--w); height: var(--h); border-radius: 999px; position: relative;
+  background: #E2E8F0; transition: background .2s ease;
+}
+.switch input { display: none; }
+.switch .dot {
+  position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; border-radius: 50%;
+  background: #fff; box-shadow: var(--shadow-soft); transition: left .2s ease;
+}
+.switch input:checked ~ .dot { left: calc(var(--w) - 22px); }
+.switch input:checked ~ .track { background: #22C55E; }
+
+/* Date picker host styles (plug-in handles internals) */
+
+
+/* File Upload */
+.file-drop {
+  border: 1px dashed #94A3B8; border-radius: .75rem; background: #fff;
+  padding: 1rem; text-align: center; color: #475569;
+}
+.file-drop.dragover { background: #F8FAFF; border-color: #0EA5E9; }
+
+/* Form Stepper */
+.stepper {
+  display: flex; gap: 1rem; justify-content: center; align-items: center;
+}
+.stepper__item {
+  display: inline-flex; align-items: center; gap: .5rem;
+  padding: .5rem .75rem; border-radius: .625rem; border: 1px solid var(--border);
+  background: #F1F5F9; color: #475569; font-weight: 600; font-size: .9rem;
+}
+.stepper__item.is-active {
+  background: var(--gradient-accent); color: #fff; box-shadow: var(--shadow-blue);
+}
+
+/* Form Actions */
+.form-actions { display: flex; gap: .75rem; justify-content: flex-end; }
+
+/* =========================================================================
+   4) DATA DISPLAY & TABLES
+   ========================================================================= */
+.table {
+  width: 100%; border-collapse: separate; border-spacing: 0;
+  background: #fff; border: 1px solid var(--border); border-radius: .75rem;
+  overflow: hidden;
+}
+.table thead th {
+  background: #F1F5F9; text-align: left; padding: .75rem .9rem; font-weight: 700; font-size: .9rem;
+  color: #0F172A; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1;
+}
+.table tbody td { padding: .75rem .9rem; border-bottom: 1px solid #EEF2F7; }
+.table tbody tr:hover { background: #F8FAFF; }
+
+.table--compact thead th, .table--compact tbody td { padding: .5rem .6rem; }
+
+.description-list {
+  display: grid; grid-template-columns: max(160px) 1fr; gap: .5rem 1rem;
+}
+.description-list dt { font-weight: 600; color: #0F172A; }
+.description-list dd { color: #475569; }
+
+/* Key Metric */
+.kpi {
+  display: grid; gap: .25rem;
+}
+.kpi__label { color: #64748B; font-size: .875rem; }
+.kpi__value { font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 1.5rem; }
+.kpi__delta.up { color: #16A34A; }
+.kpi__delta.down { color: #DC2626; }
+
+/* Timeline */
+.timeline { display: grid; gap: 1rem; }
+.timeline__item { display: grid; grid-template-columns: 20px 1fr; gap: .75rem; }
+.timeline__dot { width: 10px; height: 10px; border-radius: 50%; background: #0EA5E9; margin-top: .4rem; }
+.timeline__card { background: #fff; border: 1px solid var(--border); border-radius: .625rem; padding: .75rem; }
+
+/* Empty State */
+.empty {
+  text-align: center; padding: 2.5rem 1rem; border: 1px dashed #CBD5E1; border-radius: .75rem; background: #fff;
+}
+.empty p { color: #64748B; }
+
+/* JSON viewer (container; rendering via lib) */
+.json-viewer { background: #0F172A; color: #E5E7EB; border-radius: .75rem; padding: 1rem; overflow: auto; }
+
+/* =========================================================================
+   5) FEEDBACK & OVERLAYS
+   ========================================================================= */
+.loading-overlay {
+  position: fixed; inset: 0; background: rgba(255,255,255,.6); z-index: 70;
+  display: grid; place-items: center; backdrop-filter: blur(2px);
+}
+.blocking-loader {
+  position: fixed; inset: 0; background: #fff; z-index: 70;
+  display: grid; place-items: center;
+}
+
+
+/* Error boundary panel */
+.error-panel {
+  border: 1px solid #FCA5A5; background: #FEF2F2; color: #7F1D1D;
+  padding: 1rem; border-radius: .75rem;
+}
+
+/* =========================================================================
+   6) CHARTS & VISUALIZATION (host wrappers)
+   ========================================================================= */
+.chart-card {
+  background: #fff; border: 1px solid var(--border); border-radius: .75rem;
+  padding: 1rem; box-shadow: var(--shadow-soft);
+}
+.sparkline { height: 36px; }
+.kpi-counter { font-size: 2rem; font-weight: 700; }
+
+/* Scenario matrix (sensitivity grid) */
+.scenario {
+  display: grid; gap: 2px; background: #E2E8F0; padding: 2px; border-radius: .5rem;
+}
+.scenario__cell {
+  background: #fff; padding: .5rem .6rem; text-align: center; font-variant-numeric: tabular-nums;
+}
+
+/* =========================================================================
+   7) MEDIA & PREVIEW
+   ========================================================================= */
+.pdf-viewer { border: 1px solid var(--border); border-radius: .75rem; overflow: hidden; background: #fff; }
+.video-player { border-radius: .75rem; overflow: hidden; box-shadow: var(--shadow-soft); }
+.map-embed { border-radius: .75rem; border: 1px solid var(--border); overflow: hidden; }
+
+/* -------------------- Simple layout utilities -------------------- */
+.row { display: flex; align-items: center; gap: .75rem; }
+.row-sm { display: flex; align-items: center; gap: .5rem; }
+.stack { display: grid; gap: .75rem; }
+.between { justify-content: space-between; }
+
+/* Centered chart placeholder/card */
+.chart-card { display: flex; align-items: center; justify-content: center; height: 220px; color: #94a3b8; background: #fff; border: 1px solid var(--border); border-radius: .75rem; }
+
+/* Height helpers */
+.h-220 { height: 220px; }
+.h-180 { height: 180px; }
+.h-380 { height: 380px; }
+
+/* Max-width helpers */
+.maxw-auth { max-width: 420px; }
+.maxw-form { max-width: 520px; }
+
+/* Spacing utilities */
+.mt-2 { margin-top: .5rem; }
+.mt-3 { margin-top: .75rem; }
+.mt-4 { margin-top: 1rem; }
+.mb-2 { margin-bottom: .5rem; }
+.mb-3 { margin-bottom: .75rem; }
+.mb-4 { margin-bottom: 1rem; }
+
+/* Text & alignment utilities */
+.text-sm { font-size: .875rem; }
+.text-right { text-align: right; }
+.fw-700 { font-weight: 700; }
+
+/* Centering helper */
+.center { display: flex; align-items: center; justify-content: center; }
+
+/* About hero preset */
+.about-hero { background: var(--gradient-secondary); color: #fff; }
+.about-hero .banner-split { padding: 4rem 1.5rem; }
+
+/* Visual tweaks */
+.bright { filter: brightness(1.05); }
+
+/* =========================================================================
+   8) SEO & META (structural helpers)
+   ========================================================================= */
+
+.faq-schema { display: none; }
+
+/* =========================================================================
+   9) AUTHENTICATION & ACCOUNTS
+   ========================================================================= */
+.auth-card {
+  background: #fff; border: 1px solid var(--border); border-radius: 1rem;
+  box-shadow: var(--shadow-soft); padding: 1.25rem;
+}
+.auth-actions { display: grid; gap: .75rem; }
+
+/* =========================================================================
+   10) LANDING PAGE COMPONENTS
+   ========================================================================= */
+.hero {
+  position: relative; text-align: center; color: #fff; padding: 7rem 2rem;
+  background: var(--gradient-primary); background-size: 200% 200%;
+  animation: gradient-x 10s ease infinite;
+}
+.hero__title {
+  font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 700; text-shadow: 0 4px 12px rgba(0,0,0,.4);
+}
+.hero__subtitle { color: #DBEAFE; max-width: 42rem; margin: 1rem auto 1.5rem; }
+
+.dual-cta { display: inline-flex; gap: .75rem; }
+
+/* Feature card */
+.feature {
+  background: #fff; border: 1px solid var(--border); border-radius: 1.25rem;
+  box-shadow: var(--shadow-soft); padding: 1.25rem; text-align: left;
+}
+.feature h3 { color: var(--epi-blue-dark); font-weight: 700; margin-bottom: .25rem; }
+.feature p { color: #475569; }
+
+/* How it works (4-step) */
+.how-steps { display: grid; gap: 1rem; }
+@media (min-width: 768px) { .how-steps { grid-template-columns: repeat(4,1fr); } }
+.how-steps .step { background: #fff; border: 1px solid var(--border); border-radius: .75rem; padding: 1rem; text-align: center; }
+
+/* Pricing teaser */
+.pricing-teaser { display: grid; gap: 1rem; }
+@media (min-width: 768px) { .pricing-teaser { grid-template-columns: repeat(2,1fr); } }
+.plan {
+  border: 1px solid var(--border); border-radius: 1rem; padding: 1.5rem; background: #fff;
+  transition: box-shadow .2s ease, transform .2s ease;
+}
+.plan:hover { transform: translateY(-4px); box-shadow: var(--shadow-strong); }
+.plan__price { font-size: 2.25rem; font-weight: 800; }
+
+/* CTA deep strip */
+.cta-strip {
+  color: #fff; text-align: center; padding: 4rem 1.5rem; background: var(--gradient-cta);
+}
+
+/* =========================================================================
+   11) ABOUT PAGE COMPONENTS
+   ========================================================================= */
+.banner-split {
+  display: grid; gap: 1rem; align-items: center;
+}
+@media (min-width: 1024px) { .banner-split { grid-template-columns: 1.2fr 1fr; } }
+
+
+/* Standards row */
+.standards {
+  display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 1rem;
+}
+.standards .tile {
+  background: #fff; border: 1px solid var(--border); border-radius: .75rem;
+  padding: 1rem; display: grid; place-items: center;
+}
+
+/* Team grid */
+.team-grid { display: grid; gap: 1rem; }
+@media (min-width: 768px) { .team-grid { grid-template-columns: repeat(3,1fr); } }
+.person {
+  background: #fff; border: 1px solid var(--border); border-radius: .75rem;
+  padding: 1rem; text-align: center;
+}
+
+/* =========================================================================
+   12) VALUATION TYPES
+   ========================================================================= */
+.types-hero { background: var(--gradient-secondary); color: #fff; border-radius: 1rem; padding: 2rem; }
+.methods-overview { display: grid; gap: 1rem; }
+@media (min-width: 768px) { .methods-overview { grid-template-columns: repeat(3,1fr); } }
+
+/* =========================================================================
+   13) PRICING PAGE
+   ========================================================================= */
+.pricing-hero { text-align: center; padding: 3rem 1rem; }
+.comp-table {
+  width: 100%; border-collapse: separate; border-spacing: 0; overflow: hidden;
+  border: 1px solid var(--border); border-radius: .75rem; background: #fff;
+}
+.comp-table th, .comp-table td { padding: .75rem 1rem; border-bottom: 1px solid #EEF2F7; }
+.comp-table th { background: #F8FAFF; text-align: left; }
+
+/* =========================================================================
+   14) REPORTS & SAMPLES
+   ========================================================================= */
+.reports-hero { display: grid; gap: 1rem; align-items: center; }
+.pdf-embed { border: 1px solid var(--border); border-radius: .75rem; overflow: hidden; }
+
+
+/* =========================================================================
+   15) CONTACT / SUPPORT
+   ========================================================================= */
+.contact-hero { text-align: center; }
+.contact-form {
+  background: #fff; border: 1px solid var(--border); border-radius: .75rem;
+  padding: 1rem; box-shadow: var(--shadow-soft);
+}
+.quick-contacts { display: grid; gap: 1rem; }
+@media (min-width: 768px) { .quick-contacts { grid-template-columns: repeat(3,1fr); } }
+
+
+/* =========================================================================
+   16) DASHBOARD (SAVED REPORTS)
+   ========================================================================= */
+.dash-hero { background: #fff; border: 1px solid var(--border); border-radius: 1rem; padding: 1.25rem; }
+.summary-widgets { display: grid; gap: 1rem; }
+@media (min-width: 1024px) { .summary-widgets { grid-template-columns: repeat(4,1fr); } }
+
+.smart-banner {
+  background: linear-gradient(135deg, rgba(0,191,255,.1), rgba(0,51,160,.1));
+  border: 1px solid rgba(0,191,255,.25); border-radius: .75rem; padding: 1rem;
+}
+
+/* =========================================================================
+   17) API MARKETPLACE
+   ========================================================================= */
+.market-hero {
+  background: linear-gradient(90deg, #002B7F, #00CFFF); color: #fff; border-radius: 1rem; padding: 2rem;
+}
+.api-grid { display: grid; gap: 1rem; }
+@media (min-width: 1024px) { .api-grid { grid-template-columns: repeat(3,1fr); } }
+.api-card {
+  background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2);
+  border-radius: 1rem; padding: 1rem; transition: background .2s ease, transform .2s ease;
+}
+.api-card:hover { background: rgba(255,255,255,.2); transform: translateY(-3px); }
+
+/* =========================================================================
+   18) MULTI-CURRENCY
+   ========================================================================= */
+.currency-bar { display: flex; gap: .5rem; flex-wrap: wrap; }
+.currency-chip {
+  background: var(--gradient-secondary); color: #fff; padding: .5rem 1rem;
+  border-radius: .5rem; font-weight: 600; box-shadow: var(--shadow-blue);
+}
+.price-fx { color: #64748B; font-size: .9rem; }
+
+/* =========================================================================
+   19) PARTNER PORTAL
+   ========================================================================= */
+.partner-hero {
+  background: linear-gradient(to bottom, #E6F2FF, #FFFFFF); border: 1px solid var(--border);
+  border-radius: 1rem; padding: 1.25rem;
+}
+.whitelabel {
+  background: #fff; border: 1px dashed #BFDBFE; border-radius: .75rem; padding: 1rem;
+}
+
+/* =========================================================================
+   20) VALUATION FLOWS (WIZARD)
+   ========================================================================= */
+.wizard {
+  background: #fff; border: 1px solid var(--border); border-radius: 1rem; padding: 1rem;
+}
+.wizard__header { text-align: center; margin-bottom: 1rem; }
+.wizard__steps { margin-bottom: 1rem; }
+.wizard__content { display: grid; gap: .75rem; }
+.wizard__footer { display: flex; justify-content: space-between; gap: .75rem; }
+
+/* =========================================================================
+   21) INSTRUMENTS & ANALYTICS
+   ========================================================================= */
+.instrument-form { background: #fff; border: 1px solid var(--border); border-radius: .75rem; padding: 1rem; }
+.results-card {
+  border: 1px solid var(--border); border-radius: .75rem; padding: 1rem; background: #fff; box-shadow: var(--shadow-soft);
+}
+
+/* =========================================================================
+   22) CASES & REPORTS MANAGEMENT
+   ========================================================================= */
+
+.case-row { border: 1px solid var(--border); border-radius: .75rem; background: #fff; padding: .75rem; }
+
+
+/* =========================================================================
+   23) PROVIDERS & DATA INTEGRATIONS
+   ========================================================================= */
+.alpha-quote {
+  border: 1px solid var(--border); border-radius: .75rem; background: #fff; padding: .75rem;
+  display: grid; gap: .25rem;
+}
+
+
+/* =========================================================================
+   24) ADMIN / SETTINGS (FUTURE)
+   ========================================================================= */
+
+
+/* =========================================================================
+   25) UTILITIES (HOOKS/CONTEXT STYLES — mostly structural)
+   ========================================================================= */
+.api-debug { background: #0F172A; color: #E5E7EB; padding: .75rem; border-radius: .5rem; overflow: auto; }
+
+/* =========================================================================
+   26) ACCESSIBILITY & INTL
+   ========================================================================= */
+.visually-hidden {
+  position: absolute !important;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 0 !important; border: 0 !important; height: 1px !important; width: 1px !important;
+  overflow: hidden;
+}
+
+
+/* =========================================================================
+   27) CONTENT & SEO BLOCKS
+   ========================================================================= */
+.testimonial { background: #fff; border: 1px solid var(--border); border-radius: 1rem; padding: 1rem; }
+.trust-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+/* =========================================================================
+   28) FILE & DOCUMENT HANDLING
+   ========================================================================= */
+.file-list { display: grid; gap: .5rem; }
+.file-row {
+  background: #fff; border: 1px solid var(--border); border-radius: .5rem; padding: .6rem .75rem;
+  display: flex; justify-content: space-between; align-items: center; gap: .75rem;
+}
+.upload-progress {
+  height: .5rem; background: #E2E8F0; border-radius: 999px; overflow: hidden;
+}
+.upload-progress__bar { height: 100%; width: 0; background: var(--gradient-accent); }
+
+/* =========================================================================
+   29) NOTIFICATIONS & MESSAGING
+   ========================================================================= */
+
+.system-banner {
+  background: #FFFBEB; border: 1px solid #FDE68A; color: #92400E;
+  padding: .75rem 1rem; border-radius: .75rem; text-align: center;
+}
+
+/* =========================================================================
+   30) ERROR & EMPTY STATES
+   ========================================================================= */
+.page-404 {
+  text-align: center; padding: 3rem 1rem;
+}
+
+
+/* =========================================================================
+   END — Add any project-local overrides below
+   ========================================================================= */

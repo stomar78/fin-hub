@@ -1,0 +1,64 @@
+import type { Config } from 'tailwindcss'
+
+const config: Config = {
+  content: [
+    './app/**/*.{ts,tsx}',
+    './components/**/*.{ts,tsx}'
+  ],
+  theme: {
+    extend: {
+      colors: {
+        brand: {
+          deepBlue: '#0A2540',
+          emerald: '#1F7A4D',
+          signalRed: '#D64545',
+          mist: '#F5F7FA',
+          ivory: '#F9F6F0',
+          gunmetal: '#1C2A39',
+          navy: '#081A2E'
+        }
+      },
+      fontFamily: {
+        display: ['"Playfair Display"', 'serif'],
+        serif: ['"Playfair Display"', 'serif'],
+        sans: ['Inter', 'ui-sans-serif', 'system-ui']
+      },
+      borderRadius: {
+        card: '20px',
+        button: '12px',
+        pill: '999px'
+      },
+      boxShadow: {
+        card: '0 20px 45px -20px rgba(10, 37, 64, 0.45)',
+        'card-hover': '0 32px 60px -24px rgba(10, 37, 64, 0.55)',
+        'focus-dark': '0 0 0 3px rgba(10, 37, 64, 0.22)',
+        'focus-light': '0 0 0 3px rgba(255, 255, 255, 0.6)'
+      },
+      spacing: {
+        13: '3.25rem',
+        15: '3.75rem',
+        18: '4.5rem'
+      },
+      transitionDuration: {
+        focus: '180ms',
+        card: '360ms',
+        section: '420ms'
+      },
+      transitionDelay: {
+        stagger: '80ms'
+      },
+      keyframes: {
+        'fade-in-up': {
+          '0%': { opacity: '0', transform: 'translateY(32px)' },
+          '60%': { opacity: '1', transform: 'translateY(6px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' }
+        }
+      },
+      animation: {
+        'fade-in-up': 'fade-in-up 420ms ease-out forwards'
+      }
+    },
+  },
+  plugins: [],
+}
+export default config

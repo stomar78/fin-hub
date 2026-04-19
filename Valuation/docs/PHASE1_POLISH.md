@@ -1,0 +1,25 @@
+# Phase 1 — Polish Checklist
+
+- UI validation (wizard)
+  - [ ] Required fields with basic messages
+  - [ ] Number inputs with min/max and sane defaults
+  - [ ] Disable submit while loading; show errors
+- Error handling (API)
+  - [ ] Consistent error shape with `error_id` and message
+  - [ ] Guardrails for DCF terminal growth already in place
+- Reporting
+  - [ ] HTML report renders; link works
+  - [ ] PDF rendering via WeasyPrint (container) verified
+  - [ ] Fallback to HTML on local Windows
+- Seeds and data provenance
+  - [ ] `seed_country_risk` runs (local CSV sample); document remote URLs may change
+  - [ ] Provenance middleware headers present; JSON log emitted
+- OpenAPI and docs
+  - [ ] `/api/schema/` and `/api/docs/` reachable
+  - [ ] Example payloads in Swagger for `/valuation/free`
+- Dev experience
+  - [ ] README Quickstart verified (backend, frontend, compose)
+  - [ ] Docker Compose up: API, Postgres, Redis; run migrations on start
+- Security (dev scope)
+  - [ ] CORS open only in dev; note to restrict in prod
+  - [ ] No secrets committed; `.env.example` references only

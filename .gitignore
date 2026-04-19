@@ -1,0 +1,63 @@
+# dependencies (any level)
+node_modules/
+.pnp
+.pnp.js
+
+# python virtual envs & caches
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# next.js (any level)
+.next/
+out/
+next-env.d.ts
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+Thumbs.db
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files (contain secrets)
+.env
+.env.local
+.env.example
+.env*.local
+.env.development
+.env.production
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+
+# logs
+logs/
+*.log
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+*.swp
+*.swo
+
+# project-specific runtime/output
+*.db
+*.sqlite

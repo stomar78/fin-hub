@@ -1,0 +1,23 @@
+{
+  "toolSlug": "mortgage-finance",
+  "fullName": "Final Layout Test",
+  "companyName": "Cascade QA",
+  "email": "shashwath.tomar@gmail.com",
+  "phone": "+971500000009",
+  "country": "United Arab Emirates",
+  "annualTurnover": "45000000",
+  "requestedLimit": "12000000",
+  "dscr": "1.7",
+  "sector": "Logistics",
+  "bankRelationship": "established",
+  "propertyType": "industrial",
+  "estimatedValue": "30000000",
+  "emirate": "Dubai",
+  "rentalIncome": "2500000",
+  "desiredLtv": "60%",
+  "purpose": "refinance",
+  "exitStrategy": "Hold for rental income",
+  "currentLender": "Bank XYZ",
+  "outstandingBalance": "8500000",
+  "repaymentHistory": "clean"
+}

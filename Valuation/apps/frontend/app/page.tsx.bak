@@ -1,0 +1,136 @@
+"use client";
+import { useState } from "react";
+import { apiUrl } from "../lib/api";
+
+type Payload = {
+  company_name: string;
+  sector: string;
+  country: string;
+  currency: string;
+  ttm_revenue: number;
+  ebitda_margin_pct: number;
+  growth_next_year_pct: number;
+  stage: "seed" | "early" | "growth" | "mature";
+};
+
+const steps = ["Company", "Financials", "Assumptions", "Review"] as const;
+
+export default function Wizard() {
+  const [step, setStep] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [result, setResult] = useState<any>(null);
+  const [userEmail, setUserEmail] = useState<string>("");
+  const [data, setData] = useState<Payload>({
+    company_name: "",
+    sector: "Software",
+    country: "IN",
+    currency: "INR",
+    ttm_revenue: 15000000,
+    ebitda_margin_pct: 18,
+    growth_next_year_pct: 25,
+    stage: "growth",
+  });
+
+  const next = () => setStep((s: number) => Math.min(s + 1, steps.length - 1));
+  const prev = () => setStep((s: number) => Math.max(s - 1, 0));
+
+  const submit = async () => {
+    setLoading(true);
+    setError(null);
+    setResult(null);
+    try {
+      const token = typeof window !== "undefined" ? localStorage.getItem("authToken") : null;
+      const storedUser = typeof window !== "undefined" ? localStorage.getItem("authUser") : null;
+      const headers: Record<string, string> = { "Content-Type": "application/json" };
+      if (token) headers["Authorization"] = `Token ${token}`;
+      headers["X-User"] = userEmail || storedUser || "";
+      const res = await fetch(apiUrl("/api/valuation/free"), {
+        method: "POST",
+        headers,
+        body: JSON.stringify(data),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const json = await res.json();
+      setResult(json);
+    } catch (e: any) {
+      setError(e.message || String(e));
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div>
+      <h1>Valuation Wizard</h1>
+      <div style={{ marginBottom: 12, display: "flex", gap: 12 }}>
+        <a href="/alpha">Alpha Quote</a>
+        <a href="/bond">Bond Pricer</a>
+        <a href="/option">Option Pricer</a>
+        <a href="/swap">Swap Pricer</a>
+        <a href="/cases">Cases</a>
+      </div>
+      <p>Step {step + 1} / {steps.length}: {steps[step]}</p>
+      <div style={{ display: "flex", gap: 16, margin: "12px 0" }}>
+        {steps.map((label, i) => (
+          <div key={label} style={{ padding: "6px 10px", borderRadius: 6, background: i === step ? "#111" : "#eee", color: i === step ? "#fff" : "#333" }}>{label}</div>
+        ))}
+      </div>
+
+      {step === 0 && (
+        <div style={{ display: "grid", gap: 8, maxWidth: 420 }}>
+          <input placeholder="Company Name" value={data.company_name} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setData({ ...data, company_name: e.target.value })} />
+          <input placeholder="Sector" value={data.sector} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setData({ ...data, sector: e.target.value })} />
+          <input placeholder="Country (ISO2)" value={data.country} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setData({ ...data, country: e.target.value.toUpperCase() })} />
+          <input placeholder="Currency (ISO3)" value={data.currency} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setData({ ...data, currency: e.target.value.toUpperCase() })} />
+          <input placeholder="Your email (optional)" value={userEmail} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUserEmail(e.target.value)} />
+        </div>
+      )}
+
+      {step === 1 && (
+        <div style={{ display: "grid", gap: 8, maxWidth: 420 }}>
+          <input type="number" placeholder="TTM Revenue" value={data.ttm_revenue} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setData({ ...data, ttm_revenue: Number(e.target.value) })} />
+          <input type="number" placeholder="EBITDA Margin %" value={data.ebitda_margin_pct} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setData({ ...data, ebitda_margin_pct: Number(e.target.value) })} />
+        </div>
+      )}
+
+      {step === 2 && (
+        <div style={{ display: "grid", gap: 8, maxWidth: 420 }}>
+          <input type="number" placeholder="Growth Next Year %" value={data.growth_next_year_pct} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setData({ ...data, growth_next_year_pct: Number(e.target.value) })} />
+          <select value={data.stage} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setData({ ...data, stage: e.target.value as Payload["stage"] })}>
+            <option value="seed">seed</option>
+            <option value="early">early</option>
+            <option value="growth">growth</option>
+            <option value="mature">mature</option>
+          </select>
+        </div>
+      )}
+
+      {step === 3 && (
+        <div style={{ background: "#f8f8f8", padding: 12, borderRadius: 6 }}>
+          <pre style={{ whiteSpace: "pre-wrap" }}>{JSON.stringify(data, null, 2)}</pre>
+        </div>
+      )}
+
+      <div style={{ marginTop: 16, display: "flex", gap: 8 }}>
+        <button onClick={prev} disabled={step === 0}>Back</button>
+        {step < steps.length - 1 ? (
+          <button onClick={next}>Next</button>
+        ) : (
+          <button onClick={submit} disabled={loading}>{loading ? "Submitting..." : "Submit"}</button>
+        )}
+      </div>
+
+      {error && <p style={{ color: "crimson" }}>Error: {error}</p>}
+      {result && (
+        <div style={{ marginTop: 16 }}>
+          <h3>Result</h3>
+          <p>Range: {result.value_low.toLocaleString()} — {result.value_high.toLocaleString()} (mid {result.value_mid.toLocaleString()})</p>
+          <p>PDF: <a href={`${apiUrl("")}${result.pdf_url}`} target="_blank">Download</a></p>
+          <p><a href="/cases">View recent cases</a></p>
+          <p><a href="/alpha">Alpha Global Quote</a></p>
+        </div>
+      )}
+    </div>
+  );
+}
